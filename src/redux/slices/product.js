@@ -1,6 +1,7 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { base_url } from '../../index'
 
 const initialState = {
   products: [],
@@ -11,13 +12,21 @@ const initialState = {
 
 // Define an async thunk to fetch products from the API
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('http://127.0.0.1:8080/api/products');
-  // console.log(response)
+  const response = await axios.get(`${base_url}/api/products`);
+  return response.data;
+});
+export const fetchProductsCustom = createAsyncThunk('products/fetchProductsCustom', async ({ keyword, currentPage, priceRange, ratings, category }) => {
+  let link = `${base_url}/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${priceRange}&ratings[gte]=${ratings}`
+  if (category) {
+    link = `${base_url}/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${priceRange}&ratings[gte]=${ratings}&category=${category}`
+
+  }
+  const response = await axios.get(link);
   return response.data;
 });
 
 export const fetchProductDetails = createAsyncThunk('products/productDetails', async (id) => {
-  const response = await axios.get(`http://127.0.0.1:8080/api/products/${id}`);
+  const response = await axios.get(`${base_url}/api/products/${id}`);
   return response.data;
 });
 
@@ -38,6 +47,17 @@ const productSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(fetchProductsCustom.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProductsCustom.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.products = action.payload;
+      })
+      .addCase(fetchProductsCustom.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
 
       // seleted product
       .addCase(fetchProductDetails.pending, (state) => {
@@ -46,6 +66,10 @@ const productSlice = createSlice({
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.selectedProduct = action.payload;
+      })
+      .addCase(fetchProductDetails.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   },
 });
@@ -53,5 +77,5 @@ const productSlice = createSlice({
 export default productSlice.reducer;
 
 // Export any actions you need
-export const selectAllProducts = (state) => state.product.products;   // state > product -> this product is in store reducer
-export const selectProductById = (state) => state.product.selectedProduct;
+export const selectAllProducts = (state) => state.product;   // state > product -> this product is in store reducer
+export const selectProductById = (state) => state.product;

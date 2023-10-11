@@ -1,0 +1,127 @@
+.filter-container {
+	width: 80vw;
+	margin: 2vmax auto;
+	padding: 10px 0px;
+}
+.filter-btn-container {
+    border-bottom: 1px solid tomato;
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px 0px;
+	> button {
+        padding: 10px 30px;
+		background-color: tomato;
+		color: white;
+		border-radius: 5px;
+		border: none;
+		margin: 10px 0px;
+		font-family: roboto;
+	}
+}
+.border-bottom{
+    padding-bottom: 10px;
+    border-bottom: 1px solid tomato;
+}
+.filter-box {
+	width: 80vw;
+	display: flex;
+	flex-direction: row;
+}
+.category-filter-box {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+    >p{
+        font-weight: bold;
+    }
+	> div {
+		> li {
+			list-style: none;
+            cursor: pointer;
+            margin: 5px 0px;
+            font-family: 'Courier New', Courier, monospace;
+            transition: 0.2s;
+            &:hover{
+                color: tomato;
+            }
+		}
+	}
+}
+.right-side-filter {
+	> p {
+		text-align: center;
+	}
+}
+.price-filter-box{
+    margin: 10px 0px;
+}
+.rating-filter-box{
+    display: flex;
+
+    align-items: center;
+>p{
+    margin-right: 10px;
+}
+}
+
+.page-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	> span {
+		padding: 0px 10px;
+	}
+}
+.paginate-btn {
+	height: 30px;
+	width: 100px;
+	cursor: pointer;
+	background-color: tomato;
+	color: white;
+	border-radius: 5px;
+	border: none;
+	&:hover {
+		background-color: rgb(253, 68, 36);
+	}
+}
+.open-filter-section {
+	display: block;
+}
+.hide-filter-section {
+	display: none;
+}
+.price-filter-box {
+	display: flex;
+	align-items: center;
+	> input {
+		width: 180px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.filter-box {
+		flex-direction: column;
+		gap: 10px;
+	}
+	.category-filter-box {
+		width: 100%;
+       align-items: start;
+       margin: 10px 0px;
+		> p {
+			display: inline;
+		}
+		> div {
+			> input {
+				display: inline;
+			}
+		}
+	}
+    .rating-filter-box{
+       >p{
+        margin-right: 10px;
+       }
+    }
+}

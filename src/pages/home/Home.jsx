@@ -2,39 +2,56 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, selectAllProducts } from "../../redux/slices/product";
 import "./home.scss";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import ProductCard from "./ProductCard";
+import MetaData from "../layout/MetaData";
+import Loading from "../layout/loading/Loading";
 
 const Home = () => {
 	const dispatch = useDispatch();
-	const res  = useSelector(selectAllProducts);
-	const products = res?.products
-	console.log(products);
+	const res = useSelector(selectAllProducts);
+	
+
+	const products = res?.products.products; // inside products state we are getting products array
+	const status = res?.status;
+	const error = res?.error;
 
 	useEffect(() => {
 		// Dispatch the fetchProducts action when the component mounts
 		dispatch(fetchProducts());
-	}, [dispatch]);
+		if (error) {
+			return toast.error(error);
+		}
+	}, [dispatch, error]);
 
 	return (
-		<div className='App'>
-			<h1>Product List Home</h1>
-			{products?.map((product) => (
-				<div key={product._id} className='product-box'>
-					<Link to={`/product-detail/${product._id}`}>
-						<img src={product?.images[0].url} alt={product?.name} />
-						<h2>{product?.title}</h2>
-						<h4>{product?.brand}</h4>
-						<p>Description: {product?.description}</p>
-						<p>Stock: {product?.stock}</p>
-						<p>Price : {product?.discountPrice}</p>
-						<p>
-							Total Price: ${product?.price} Discount Percentage :{" "}
-							{product?.discountPercentage} %{" "}
-						</p>
-					</Link>
-				</div>
-			))}
-		</div>
+		<>
+			{status === "loading" ? (
+				<Loading />
+			) : (
+				<>
+					<MetaData title='ECOMMERCE' />
+
+					<div className='banner'>
+						<p>Welcome to Ecommerce</p>
+						<h1>FIND AMAZING PRODUCTS BELOW</h1>
+
+						<a href='#container'>
+							<button>Shop Now</button>
+						</a>
+					</div>
+
+					<h2 className='homeHeading'>Featured Products</h2>
+
+					<div className='container' id='container'>
+						{products &&
+							products?.map((product) => (
+								<ProductCard key={product._id} product={product} />
+							))}
+					</div>
+				</>
+			)}
+		</>
 	);
 };
 
