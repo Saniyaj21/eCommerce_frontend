@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import './app.css'
+import './App.css'
 import {Toaster} from 'react-hot-toast'
 import Home from './pages/home/Home';
 import Header from './pages/layout/header/Header';
@@ -10,8 +10,19 @@ import Search from './pages/product/Search';
 
 import PageNotFound from './pages/404/PageNotFound';
 import Product from './pages/product/Product';
+import LoginRegister from './pages/auth/LoginRegister';
+import Account from './pages/auth/Account';
+import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import { getUser } from "../src/redux/slices/auth";
+
+
 
 function App() {
+  const dispatch = useDispatch()
+useEffect(() => {
+  dispatch(getUser())
+}, [dispatch])
 
 
 
@@ -25,6 +36,11 @@ function App() {
       <Route path='/search' element={<Search />}/>
       <Route path='/products' element={<Product />}/>
       <Route path='/products/:keyword' element={<Product />}/>
+      <Route path='/login' element={<LoginRegister />}/>
+      <Route path='/account' element={<Account />}/>
+
+
+
       <Route path='/admin' element={<DashBoard />}/>
 
 

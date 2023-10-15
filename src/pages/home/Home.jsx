@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, selectAllProducts } from "../../redux/slices/product";
 import "./home.scss";
-import { toast } from "react-hot-toast";
 import ProductCard from "./ProductCard";
 import MetaData from "../layout/MetaData";
+import { toast } from "react-hot-toast";
 import Loading from "../layout/loading/Loading";
 
 const Home = () => {

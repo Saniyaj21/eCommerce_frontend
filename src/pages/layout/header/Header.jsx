@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {Link} from 'react-router-dom'
 import './header.scss'
 
@@ -15,7 +15,7 @@ const Header = () => {
         <nav className={`nav ${isNavMobile ? "nav-mobile" : ""}`}>
           <span className="logo">
             <a href="/">
-              <span className="logo-text">ECOMMERCE</span>
+              <span className="logo-text">CloudShop</span>
               {/* <img className="logo-icon" src={dp} alt="saniyaj mallik" /> */}
             </a>
           </span>
@@ -29,7 +29,7 @@ const Header = () => {
               <li className="nav-li"><Link className="nav-a" to={'/search'}>Search</Link></li>
               <li className="nav-li"><Link className="nav-a" to={'/products'}>Products</Link></li>
               <li className="nav-li"><Link className="nav-a" to={'/'}>Cart</Link></li>
-              <li className="nav-li"><Link className="nav-a" to={'/'}>Profile</Link></li>
+              <li className="nav-li"><Link className="nav-a" to={'/login'}>Profile</Link></li>
               
             </ul>
           </div>

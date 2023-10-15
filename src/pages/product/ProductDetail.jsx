@@ -52,7 +52,7 @@ const ProductDetail = () => {
 								{product &&
 									product.images?.map((item, i) => (
 										<div>
-											<img src={item?.url} />
+											<img src={item?.url}  alt={product?.name}/>
 										</div>
 									))}
 							</Carousel>
