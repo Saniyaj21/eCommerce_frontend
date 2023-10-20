@@ -20,7 +20,7 @@ const LoginRegister = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const dispatch = useDispatch();
-	const { isAuthenticated, error, status } = useSelector(selectUser);
+	const {  isAuthenticated, error, status } = useSelector(selectUser);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -66,6 +66,7 @@ const LoginRegister = () => {
 			dispatch(registerUser(myForm));
 		}
 	};
+	
 
 	return (
 		<>
@@ -121,7 +122,7 @@ const LoginRegister = () => {
 								<div className='action-btn'>
 									<button type='submit'>Login</button>
 								</div>
-								<Link to={"/"} className='link'>
+								<Link to={"/sendotp"} className='link' >
 									Forgot Password?
 								</Link>
 								<br />
