@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Link} from 'react-router-dom'
 import './header.scss'
+import AuthHeader from "../../auth/AuthHeader";
 
 const Header = () => {
  
@@ -29,7 +30,7 @@ const Header = () => {
               <li className="nav-li"><Link className="nav-a" to={'/search'}>Search</Link></li>
               <li className="nav-li"><Link className="nav-a" to={'/products'}>Products</Link></li>
               <li className="nav-li"><Link className="nav-a" to={'/'}>Cart</Link></li>
-              <li className="nav-li"><Link className="nav-a" to={'/login'}>Profile</Link></li>
+              <li className="nav-li"><Link className="nav-a" to={'/login'}><AuthHeader /></Link></li>
               
             </ul>
           </div>

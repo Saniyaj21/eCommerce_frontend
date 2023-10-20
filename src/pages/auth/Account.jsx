@@ -12,13 +12,11 @@ const Account = () => {
 	const { user, isAuthenticated, status } = useSelector(selectUser);
 	console.log(status);
 
-	const handleLogout = () => {
-		dispatch(logoutUser());
-	};
-
+	
 	useEffect(() => {
 		
 		if (isAuthenticated === false) {
+			toast.success("Log Out Successfull")
 			navigate("/login");
 		}
 	}, [navigate, isAuthenticated, dispatch]);
@@ -29,7 +27,7 @@ const Account = () => {
 				<Loading />
 			) : (
 				<div>
-					<button onClick={handleLogout}>logout</button>
+					account
 
 
 				</div>
