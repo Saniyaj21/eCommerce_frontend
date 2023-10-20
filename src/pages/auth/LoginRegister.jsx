@@ -6,8 +6,7 @@ import "./loginRegister.scss";
 import { toast } from "react-hot-toast";
 import Loading from "../layout/loading/Loading";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { base_url } from "../../index";
+
 
 const LoginRegister = () => {
 	const [option, setOption] = useState(true);

@@ -43,7 +43,13 @@ export const registerUser = createAsyncThunk('user/registerUser', async (myForm)
 
 export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
 
-  const response = await axios.get(`${base_url}/api/user/logout`);
+  const response = await axios.get(`${base_url}/api/user/logout`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
 
   return response.data;
 });
