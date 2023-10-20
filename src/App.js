@@ -11,10 +11,14 @@ import Search from './pages/product/Search';
 import PageNotFound from './pages/404/PageNotFound';
 import Product from './pages/product/Product';
 import LoginRegister from './pages/auth/LoginRegister';
-import Account from './pages/auth/Account';
+import Account from './pages/user/Account';
 import { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { getUser } from "../src/redux/slices/auth";
+import UpdateProfile from './pages/user/UpdateProfile';
+import UpdatePassword from './pages/user/UpdatePassword';
+import SendOTP from './pages/auth/SendOTP';
+import ResetPassword from './pages/auth/ResetPassword';
 
 
 
@@ -38,6 +42,10 @@ useEffect(() => {
       <Route path='/products/:keyword' element={<Product />}/>
       <Route path='/login' element={<LoginRegister />}/>
       <Route path='/account' element={<Account />}/>
+      <Route path='/account/update' element={<UpdateProfile />}/>
+      <Route path='/password/update' element={<UpdatePassword />}/>
+      <Route path='/sendotp' element={<SendOTP />}/>
+      <Route path='/password/reset' element={<ResetPassword />}/>
 
 
 

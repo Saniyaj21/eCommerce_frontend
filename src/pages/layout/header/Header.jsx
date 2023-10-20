@@ -1,43 +1,56 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
-import './header.scss'
+import { Link } from "react-router-dom";
+import "./header.scss";
 import AuthHeader from "../../auth/AuthHeader";
 
 const Header = () => {
- 
-    const [isNavMobile, setIsNavMobile] = useState(false);
+	const [isNavMobile, setIsNavMobile] = useState(false);
 
-    const toggleMenu = () => {
-      setIsNavMobile(!isNavMobile);
-    };
-  
-    return (
-      <header className={`${isNavMobile ? "fix-to-top" : ""}`}>
-        <nav className={`nav ${isNavMobile ? "nav-mobile" : ""}`}>
-          <span className="logo">
-            <a href="/">
-              <span className="logo-text">CloudShop</span>
-              {/* <img className="logo-icon" src={dp} alt="saniyaj mallik" /> */}
-            </a>
-          </span>
-          <span onClick={toggleMenu} className={`hamburg ${isNavMobile ? "ham" : ""}`}>
-            <div className="span-1 ham-lines"></div>
-            <div className="span-2 ham-lines"></div>
-            <div className="span-3 ham-lines"></div>
-          </span>
-          <div className={`menu ${isNavMobile ? "menu-toggle" : ""}`}>
-            <ul  className="ul">
-              <li className="nav-li"><Link className="nav-a" to={'/search'}>Search</Link></li>
-              <li className="nav-li"><Link className="nav-a" to={'/products'}>Products</Link></li>
-              <li className="nav-li"><Link className="nav-a" to={'/'}>Cart</Link></li>
-              <li className="nav-li"><Link className="nav-a" to={'/login'}><AuthHeader /></Link></li>
-              
-            </ul>
-          </div>
-        </nav>
-      </header>
-    );
-  
-}
+	const toggleMenu = () => {
+		setIsNavMobile(!isNavMobile);
+	};
 
-export default Header
+	return (
+		<header className={`${isNavMobile ? "fix-to-top" : ""}`}>
+			<nav className={`nav ${isNavMobile ? "nav-mobile" : ""}`}>
+				<span className='logo'>
+					<a href='/'>
+						<span className='logo-text'>CloudShop</span>
+					</a>
+				</span>
+				<span
+					onClick={toggleMenu}
+					className={`hamburg ${isNavMobile ? "ham" : ""}`}
+				>
+					<div className='span-1 ham-lines'></div>
+					<div className='span-2 ham-lines'></div>
+					<div className='span-3 ham-lines'></div>
+				</span>
+			</nav>
+			<div className={`side-block ${isNavMobile ? "toggle-side-block" : ""}`}>
+				<ul className='ul'>
+					<Link className='nav-a' to={"/"}>
+						<li className='nav-li'> <i className="fa-solid fa-house"></i>Home</li>
+					</Link>
+					<Link className='nav-a' to={"/products"}>
+						<li className='nav-li'> <i className="fa-solid fa-bag-shopping"></i>Products</li>
+					</Link>
+					<Link className='nav-a' to={"/search"}>
+						<li className='nav-li'> <i className="fa-brands fa-searchengin"></i> Search</li>
+					</Link>
+					<Link className='nav-a' to={"/"}>
+						<li className='nav-li'><i className ="fa-solid fa-cart-shopping"></i>Cart</li>
+					</Link>
+					<Link className='nav-a' to={"/account"}>
+						<li className='nav-li'><i className="fa-solid fa-user"></i>Account</li>
+					</Link>
+					<Link className='nav-a' to={"/login"}>
+						<li className='nav-li'><AuthHeader /></li>
+					</Link>
+				</ul>
+			</div>
+		</header>
+	);
+};
+
+export default Header;
