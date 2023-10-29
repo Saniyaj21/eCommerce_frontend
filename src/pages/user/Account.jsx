@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/slices/auth";
@@ -10,17 +10,16 @@ import toast from "react-hot-toast";
 const Account = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { user, isAuthenticated, status, isUpdated} = useSelector(selectUser);
-	console.log(status);
+	const { user, isAuthenticated, status, isUpdated } = useSelector(selectUser);
+
 
 	useEffect(() => {
 		if (isAuthenticated === false) {
 			navigate("/login");
 		}
-		if ( isUpdated) {
-			toast.success("Updated")
+		if (isUpdated) {
+			toast.success("Updated");
 		}
-		
 	}, [navigate, isAuthenticated, dispatch, isUpdated]);
 
 	return (
@@ -29,10 +28,8 @@ const Account = () => {
 				<Loading />
 			) : (
 				<>
-					
 					<div className='profileContainer'>
 						<div>
-							
 							<img src={user?.avatar?.url} alt={user?.name} />
 							<Link to='/account/update'>Edit Profile</Link>
 						</div>

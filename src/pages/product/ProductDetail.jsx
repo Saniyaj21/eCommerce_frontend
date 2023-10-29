@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	createReviews,
 	fetchProductDetails,
 	selectProductById,
 } from "../../redux/slices/product";
@@ -12,14 +13,37 @@ import { Carousel } from "react-responsive-carousel";
 import MetaData from "../layout/MetaData";
 import "./productDetails.scss";
 import ReviewCard from "./ReviewCard";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { selectUser } from "../../redux/slices/auth";
+import { Rate } from "antd";
 
 const ProductDetail = () => {
 	const params = useParams();
 	const dispatch = useDispatch();
 	const { id } = params;
 	const { selectedProduct, status, error } = useSelector(selectProductById);
+	const { isAuthenticated } = useSelector(selectUser);
 
 	let product = selectedProduct?.product;
+
+	const [quantity, setQuantity] = useState(1);
+	const [open, setOpen] = useState(true);
+	const [rating, setRating] = useState(0);
+	const [comment, setComment] = useState("");
+
+	const increaseQuantity = () => {
+		if (product.Stock <= quantity) return;
+
+		const qty = quantity + 1;
+		setQuantity(qty);
+	};
+
+	const decreaseQuantity = () => {
+		if (1 >= quantity) return;
+
+		const qty = quantity - 1;
+		setQuantity(qty);
+	};
 
 	useEffect(() => {
 		// Dispatch the fetchProducts action when the component mounts
@@ -29,6 +53,38 @@ const ProductDetail = () => {
 			return toast.error(error);
 		}
 	}, [id, dispatch, error]);
+
+	const addToCartHandler = () => {
+		if (product.Stock < 1) {
+			toast.error("Product out of stock");
+			return;
+		}
+		if (!isAuthenticated) {
+			toast.error("Login First");
+			return;
+		}
+
+		const productId = product._id;
+		dispatch(addToCart({ productId, quantity }));
+		toast.success("Added to Cart");
+	};
+
+	const submitReviewToggle = () => {
+		setOpen(!open);
+		setComment("");
+		setRating(0);
+	};
+
+	const reviewSubmitHandler = () => {
+		const productId = product._id;
+		dispatch(createReviews({ productId, rating, comment }));
+		dispatch(fetchProductDetails(id));
+
+		setOpen(true);
+		setComment("");
+		setRating(0);
+		toast.success("Review Added");
+	};
 
 	return (
 		<>
@@ -51,8 +107,8 @@ const ProductDetail = () => {
 							>
 								{product &&
 									product.images?.map((item, i) => (
-										<div>
-											<img src={item?.url}  alt={product?.name}/>
+										<div key={i}>
+											<img src={item?.url} alt={product?.name} />
 										</div>
 									))}
 							</Carousel>
@@ -65,7 +121,7 @@ const ProductDetail = () => {
 									<p>Product # {product._id}</p>
 								</div>
 								<div className='detailsBlock-2'>
-									{/* <Rating {...options} /> */}
+									<Rate count={5} value={product.ratings} allowHalf disabled />
 									<span className='detailsBlock-2-span'>
 										{" "}
 										({product.numOfReviews} Reviews)
@@ -75,16 +131,14 @@ const ProductDetail = () => {
 									<h1>{`₹${product.price}`}</h1>
 									<div className='detailsBlock-3-1'>
 										<div className='detailsBlock-3-1-1'>
-											<button>-</button>
-											{/* <button onClick={decreaseQuantity}>-</button> */}
+											<button onClick={decreaseQuantity}>-</button>
 											{/* <input readOnly type='number' value={quantity} /> */}
-											<input readOnly type='number' value={11} />
-											<button>+</button>
-											{/* <button onClick={increaseQuantity}>+</button> */}
+											{`  ${quantity} `}
+											<button onClick={increaseQuantity}>+</button>
 										</div>
 										<button
 											disabled={product.Stock < 1 ? true : false}
-											// onClick={addToCartHandler}
+											onClick={addToCartHandler}
 										>
 											Add to Cart
 										</button>
@@ -104,44 +158,49 @@ const ProductDetail = () => {
 									Description : <p>{product.description}</p>
 								</div>
 
-								{/* <button onClick={submitReviewToggle} className='submitReview'> */}
-								<button className='submitReview'>Submit Review</button>
+								<button onClick={submitReviewToggle} className='submitReview'>
+									Submit Review
+								</button>
+								{/* <button className='submitReview'>Submit Review</button> */}
+
+								<div
+									className={`${
+										open ? "hide-submit-review" : "show-submit-review"
+									} submit-review-div`}
+								>
+									<h3>Add a rating and message</h3>
+									<div className='submitDialog'>
+										<Rate
+											count={5}
+											value={rating}
+											allowHalf
+											onChange={(value) => setRating(value)}
+											//   disabled
+										/>
+
+										<textarea
+											className='submitDialogTextArea'
+											cols='30'
+											rows='5'
+											value={comment}
+											onChange={(e) => setComment(e.target.value)}
+										></textarea>
+									</div>
+									<div>
+										<button onClick={submitReviewToggle}>Cancel</button>
+										<button
+											onClick={reviewSubmitHandler}
+											className='submit-btn'
+										>
+											Submit
+										</button>
+									</div>
+								</div>
 							</div>
 						)}
 					</div>
 
 					<h3 className='reviewsHeading'>REVIEWS</h3>
-
-					{/* <Dialog
-						aria-labelledby='simple-dialog-title'
-						open={open}
-						onClose={submitReviewToggle}
-					>
-						<DialogTitle>Submit Review</DialogTitle>
-						<DialogContent className='submitDialog'>
-							<Rating
-								onChange={(e) => setRating(e.target.value)}
-								value={rating}
-								size='large'
-							/>
-
-							<textarea
-								className='submitDialogTextArea'
-								cols='30'
-								rows='5'
-								value={comment}
-								onChange={(e) => setComment(e.target.value)}
-							></textarea>
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={submitReviewToggle} color='secondary'>
-								Cancel
-							</Button>
-							<Button onClick={reviewSubmitHandler} color='primary'>
-								Submit
-							</Button>
-						</DialogActions>
-					</Dialog> */}
 
 					{product && product.reviews[0] ? (
 						<div className='reviews'>

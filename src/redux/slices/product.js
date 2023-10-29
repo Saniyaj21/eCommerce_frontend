@@ -5,6 +5,7 @@ import { base_url } from '../../index'
 
 const initialState = {
   products: [],
+  reviews: [],
   selectedProduct: null,
   status: 'idle',
   error: null,
@@ -29,6 +30,28 @@ export const fetchProductDetails = createAsyncThunk('products/productDetails', a
   const response = await axios.get(`${base_url}/api/products/${id}`);
   return response.data;
 });
+
+export const createReviews = createAsyncThunk('products/createReviews', async ({ productId, rating, comment }) => {
+  const response = await axios.put(`${base_url}/api/products/review`,
+
+    {
+      productId,
+      rating,
+      comment
+    }
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }
+  );
+  return response.data;
+});
+
+
+
 
 const productSlice = createSlice({
   name: 'products',
@@ -70,7 +93,22 @@ const productSlice = createSlice({
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+
+      // create Reviews
+      .addCase(createReviews.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createReviews.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.selectedProduct.product = action.payload.product
+      })
+      .addCase(createReviews.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
+
+
   },
 });
 

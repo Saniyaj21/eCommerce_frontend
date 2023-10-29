@@ -1,0 +1,77 @@
+.dashboard {
+	display: flex;
+	min-height: 100vh;
+}
+
+.dash-sidebar {
+	width: 20%;
+}
+
+.dash-head {
+	width: 100%;
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 0px;
+	background-color: rgba(0, 0, 0, 0.234);
+	border-radius: 10px;
+	> b {
+		
+		padding: 10px 0px;
+	}
+}
+
+.dash-right {
+	width: 80%;
+
+	.circle-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		gap: 30px;
+		padding: 50px;
+
+		> div {
+			> div {
+				height: 100px;
+				width: 100px;
+				background-color: var(--blue);
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				color: white;
+			}
+			> p {
+				text-align: center;
+			}
+		}
+	}
+}
+
+.lineChart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+/* responsive */
+@media (max-width: 767px) {
+	.dashboard {
+		flex-direction: column;
+	}
+	.dash-sidebar {
+		width: 100%;
+	}
+	.dash-right {
+		width: 100%;
+	}
+	.circle-container {
+		flex-direction: column;
+	}
+    
+}
