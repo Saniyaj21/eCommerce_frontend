@@ -1,6 +1,6 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import Home from './pages/home/Home';
 import Header from './pages/layout/header/Header';
 import Footer from './pages/layout/footer/Footer';
@@ -12,50 +12,100 @@ import PageNotFound from './pages/404/PageNotFound';
 import Product from './pages/product/Product';
 import LoginRegister from './pages/auth/LoginRegister';
 import Account from './pages/user/Account';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { getUser } from "../src/redux/slices/auth";
 import UpdateProfile from './pages/user/UpdateProfile';
 import UpdatePassword from './pages/user/UpdatePassword';
 import SendOTP from './pages/auth/SendOTP';
 import ResetPassword from './pages/auth/ResetPassword';
+import CartPage from './pages/cart/CartPage';
+import OrderPage from './pages/orders/OrderPage';
+import ConfirmOrder from './pages/orders/ConfirmOrder';
+import Payment from './pages/orders/Payment';
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { base_url } from './index';
+import axios from 'axios';
+import OrderSuccess from './pages/orders/OrderSuccess';
+import MyOrders from './pages/orders/MyOrders';
+
 
 
 
 function App() {
-  const dispatch = useDispatch()
-useEffect(() => {
-  dispatch(getUser())
-}, [dispatch])
+  const dispatch = useDispatch();
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    try {
+      const { data } = await axios.get(`${base_url}/api/payment/stripeapikey`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+
+      setStripeApiKey(data.stripeApiKey);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  useEffect(() => {
+    dispatch(getUser())
+    getStripeApiKey()
+  }, [dispatch])
 
 
 
   return (
-   <Router>
+    <Router>
       <Header />
       <Toaster />
-    <Routes>
-      <Route path='/' element={<Home />}/>
-      <Route path='/product/:id' element={<ProductDetail />}/>
-      <Route path='/search' element={<Search />}/>
-      <Route path='/products' element={<Product />}/>
-      <Route path='/products/:keyword' element={<Product />}/>
-      <Route path='/login' element={<LoginRegister />}/>
-      <Route path='/account' element={<Account />}/>
-      <Route path='/account/update' element={<UpdateProfile />}/>
-      <Route path='/password/update' element={<UpdatePassword />}/>
-      <Route path='/sendotp' element={<SendOTP />}/>
-      <Route path='/password/reset' element={<ResetPassword />}/>
+
+      <Routes>
+
+ 
+
+        <Route path='/' element={<Home />} />
+        <Route path='/product/:id' element={<ProductDetail />} />
+        <Route path='/search' element={<Search />} />
+        <Route path='/products' element={<Product />} />
+        <Route path='/products/:keyword' element={<Product />} />
+        <Route path='/login' element={<LoginRegister />} />
+        <Route path='/account' element={<Account />} />
+        <Route path='/account/update' element={<UpdateProfile />} />
+        <Route path='/password/update' element={<UpdatePassword />} />
+        <Route path='/sendotp' element={<SendOTP />} />
+        <Route path='/password/reset' element={<ResetPassword />} />
+        <Route path='/cart' element={<CartPage />} />
+        <Route path='/order' element={<OrderPage />} />
+        <Route path='/order/confirm' element={<ConfirmOrder />} />
+
+        <Route path='/process/payment' element={
+          stripeApiKey ? (
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <Payment />
+            </Elements>
+          ) : null
+        } />
+
+        <Route path='/payment/success' element={<OrderSuccess />} />
+        <Route path='/orders' element={<MyOrders />} />
 
 
+        <Route path='/admin/dashboard' element={<DashBoard />} />
 
-      <Route path='/admin' element={<DashBoard />}/>
 
-
-      <Route path='*' element={<PageNotFound />}/>
-    </Routes>
-    <Footer />
-   </Router>
+        <Route path='*' element={<PageNotFound />} />
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 

@@ -1,0 +1,80 @@
+.sidebar {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 10px;
+	padding: 0px 10px;
+	margin-top: 50px;
+	> a {
+		text-decoration: none;
+		color: var(--blue);
+		> div {
+			padding: 0px 10px;
+			height: 35px;
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			font-size: 18px;
+			cursor: pointer;
+			transition: 0.3s;
+			border-radius: 0px 10px 10px 0px;
+			&:hover {
+				background-color: tomato;
+				color: white;
+			}
+		}
+	}
+	> div {
+		> details {
+			> summary {
+				padding: 0px 10px;
+				height: 35px;
+				color: var(--blue);
+				line-height: 35px;
+				font-size: 18px;
+				cursor: pointer;
+				transition: 0.3s;
+				border-radius: 0px 10px 10px 0px;
+				&:hover {
+					background-color: tomato;
+					color: white;
+				}
+			}
+
+			> a {
+				text-decoration: none;
+
+				> p {
+					padding-left: 20px;
+					height: 30px;
+					line-height: 30px;
+					color: tomato;
+					transition: 0.4s;
+					border-radius: 0px 10px 10px 0px;
+
+					&:hover {
+						background-color: rgb(245, 134, 114);
+						color: white;
+					}
+				}
+			}
+		}
+	}
+}
+.toggle-option {
+	padding-left: 20px;
+	transition: 0.3s;
+}
+.show {
+	display: block;
+}
+.hide {
+	display: none;
+}
+
+
+
+/* responsive */
+@media (max-width: 767px) {
+	
+}
