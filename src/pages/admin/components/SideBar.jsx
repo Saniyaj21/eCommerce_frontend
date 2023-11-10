@@ -8,11 +8,11 @@ const SideBar = () => {
 				{" "}
 				<div><i className="fa-solid fa-layer-group"></i> Dashboard</div>
 			</Link>
-			<Link to={"/"}>
+			<Link to={"/admin/orders"}>
 				{" "}
 				<div> <i className="fa-solid fa-truck-fast"></i> Orders</div>
 			</Link>
-			<Link to={"/"}>
+			<Link to={"/admin/users"}>
 				{" "}
 				<div><i className="fa-solid fa-users"></i> Users</div>
 			</Link>
@@ -24,11 +24,11 @@ const SideBar = () => {
 				<details>
 					<summary><i className="fa-brands fa-shopify"></i>  Product</summary>
 
-					<Link to={"/"}>
+					<Link to={"/admin/products"}>
 						<p><i className="fa-solid fa-list"></i> All</p>
 					</Link>
 
-					<Link to={"/"}>
+					<Link to={"/admin/products/add"}>
 						<p><i className="fa-solid fa-plus"></i> New</p>
 					</Link>
 				</details>

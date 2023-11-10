@@ -53,7 +53,7 @@ const DashBoard = () => {
 						<p>Orders</p>
 					</div>
 					<div>
-						<div>12</div>
+						<div>13</div>
 						<p>Users</p>
 					</div>
 				</div>
