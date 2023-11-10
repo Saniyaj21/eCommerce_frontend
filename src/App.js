@@ -30,6 +30,11 @@ import { base_url } from './index';
 import axios from 'axios';
 import OrderSuccess from './pages/orders/OrderSuccess';
 import MyOrders from './pages/orders/MyOrders';
+import ProductList from './pages/admin/ProductList';
+import AddNewProduct from './pages/admin/AddNewProduct';
+import AllUser from './pages/admin/AllUser';
+import AllOrders from './pages/admin/AllOrders';
+import UpdateProduct from './pages/admin/UpdateProduct';
 
 
 
@@ -100,6 +105,11 @@ function App() {
 
 
         <Route path='/admin/dashboard' element={<DashBoard />} />
+        <Route path='/admin/products' element={<ProductList />} />
+        <Route path='/admin/products/add' element={<AddNewProduct />} />
+        <Route path='/admin/users' element={<AllUser />} />
+        <Route path='/admin/product/:id' element={<UpdateProduct />} />
+        <Route path='/admin/orders' element={<AllOrders />} />
 
 
         <Route path='*' element={<PageNotFound />} />

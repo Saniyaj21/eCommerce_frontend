@@ -48,6 +48,11 @@ const Account = () => {
 							</div>
 
 							<div>
+								{
+									user.role === "admin" ? 
+									<Link to='/admin/dashboard'>Dashboard</Link>
+									: ""
+								}
 								<Link to='/orders'>My Orders</Link>
 								<Link to='/password/update'>Change Password</Link>
 							</div>

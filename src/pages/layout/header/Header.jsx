@@ -5,10 +5,13 @@ import AuthHeader from "../../auth/AuthHeader";
 
 const Header = () => {
 	const [isNavMobile, setIsNavMobile] = useState(false);
+	
+	
 
 	const toggleMenu = () => {
 		setIsNavMobile(!isNavMobile);
 	};
+
 
 	return (
 		<header className={`${isNavMobile ? "fix-to-top" : ""}`}>
@@ -57,6 +60,7 @@ const Header = () => {
 							<i className='fa-solid fa-user'></i>Account
 						</li>
 					</Link>
+					
 					<Link className='nav-a' to={"/login"}>
 						<li className='nav-li'>
 							<AuthHeader />
