@@ -49,7 +49,7 @@ const Account = () => {
 
 							<div>
 								{
-									user.role === "admin" ? 
+									user?.role === "admin" ? 
 									<Link to='/admin/dashboard'>Dashboard</Link>
 									: ""
 								}

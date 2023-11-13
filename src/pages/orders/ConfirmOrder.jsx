@@ -9,57 +9,50 @@ import MetaData from "../layout/MetaData";
 import { toast } from "react-hot-toast";
 import { selectCartItems } from "../../redux/slices/cartSlice";
 import { selectOrder } from "../../redux/slices/orderSlice";
-import './confirmOrder.scss';
-
+import "./confirmOrder.scss";
 
 const ConfirmOrder = () => {
-
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { user, isAuthenticated, status, isUpdated } = useSelector(selectUser);
-  const {shippingInfo} = useSelector(selectOrder);
-  const { cartItems } = useSelector(selectCartItems);
+	const { shippingInfo } = useSelector(selectOrder);
+	const { cartItems } = useSelector(selectCartItems);
 
-  useEffect(() => {
-    if (isAuthenticated === false) {
+	useEffect(() => {
+		if (isAuthenticated === false) {
 			navigate("/login");
 		}
-  }, [isAuthenticated])
-  
+	}, [isAuthenticated]);
 
+	const subtotal = cartItems.reduce(
+		(acc, item) => acc + item.quantity * item.product.price,
+		0
+	);
 
-  
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.quantity * item.product.price,
-    0
-  );
+	const shippingCharges = subtotal > 1000 ? 0 : 200;
 
-  const shippingCharges = subtotal > 1000 ? 0 : 200;
+	const tax = subtotal * 0.18;
 
-  const tax = subtotal * 0.18;
+	const totalPrice = subtotal + tax + shippingCharges;
 
-  const totalPrice = subtotal + tax + shippingCharges;
+	const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
 
-  const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
+	const proceedToPayment = () => {
+		const data = {
+			subtotal,
+			shippingCharges,
+			tax,
+			totalPrice,
+		};
 
-  const proceedToPayment = () => {
-    const data = {
-      subtotal,
-      shippingCharges,
-      tax,
-      totalPrice,
-    };
-
-    sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    navigate('/process/payment')
-  }
-
-
+		sessionStorage.setItem("orderInfo", JSON.stringify(data));
+		navigate("/process/payment");
+	};
 
 	return (
 		<>
 			<MetaData title='Confirm Order' />
-			
+
 			<div className='confirmOrderPage'>
 				<div>
 					<div className='confirmshippingArea'>

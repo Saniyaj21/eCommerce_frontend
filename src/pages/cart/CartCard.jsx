@@ -26,29 +26,29 @@ const CartCard = ({ item, deleteFromCart, saveCart }) => {
 		<>
 			<div className='cartCard'>
 				<div className='image-div'>
-					<Link className='cart-link' to={`/product/${item?.product._id}`}>
+					<Link className='cart-link' to={`/product/${item?.product?._id}`}>
 						<img
 							className='cart-image'
-							src={item?.product.images[0].url}
-							alt={item?.product.name}
+							src={item?.product?.images[0]?.url}
+							alt={item?.product?.name}
 						/>
 					</Link>
 				</div>
 				<div className='details-div'>
-					<p>{item.product.name}</p>
-					<span>{`₹${item.product.price * quantity}`}</span>
+					<p>{item?.product?.name}</p>
+					<span>{`₹${item?.product?.price * quantity}`}</span>
 					<div>
 						<div className='detailsBlock-3-1-1'>
-							<button onClick={decreaseQuantity}>-</button>
+							<button onClick={()=>decreaseQuantity()}>-</button>
 							{`  ${quantity} `}
-							<button onClick={increaseQuantity}>+</button>
+							<button onClick={()=>increaseQuantity()}>+</button>
 						</div>
-						<button className="cart-btn" onClick={() => deleteFromCart(item._id)}>Remove</button>
-						<button className="cart-btn" onClick={() => saveCart(item._id, quantity)}>
+						<button className="cart-btn" onClick={() => deleteFromCart(item?._id)}>Remove</button>
+						<button className="cart-btn" onClick={() => saveCart(item?._id, quantity)}>
 							Save Cart
 						</button>
 					</div>
-					<span>{item.product.Stock ? "" : "Out Of Stock"}</span>
+					<span>{item?.product?.Stock ? "" : "Out Of Stock"}</span>
 				</div>
 			</div>
 		</>

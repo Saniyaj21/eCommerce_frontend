@@ -35,6 +35,9 @@ import AddNewProduct from './pages/admin/AddNewProduct';
 import AllUser from './pages/admin/AllUser';
 import AllOrders from './pages/admin/AllOrders';
 import UpdateProduct from './pages/admin/UpdateProduct';
+import UpdateOrder from './pages/admin/UpdateOrder';
+import EditUser from './pages/admin/EditUser';
+import ProductReviews from './pages/admin/ProductReviews';
 
 
 
@@ -108,8 +111,13 @@ function App() {
         <Route path='/admin/products' element={<ProductList />} />
         <Route path='/admin/products/add' element={<AddNewProduct />} />
         <Route path='/admin/users' element={<AllUser />} />
+        <Route path='/admin/user/:id' element={<EditUser />} />
         <Route path='/admin/product/:id' element={<UpdateProduct />} />
         <Route path='/admin/orders' element={<AllOrders />} />
+        <Route path='/admin/order/:id' element={<UpdateOrder />} />
+
+        <Route path='/admin/reviews/:id' element={<ProductReviews />} />
+        <Route path='/admin/reviews' element={<ProductReviews />} />
 
 
         <Route path='*' element={<PageNotFound />} />
