@@ -18,9 +18,11 @@ import SideBar from "./components/SideBar";
 
 // for same css
 import "./productList.scss";
+import { useNavigate } from "react-router-dom";
 
 const AllUser = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate()
 	const { allUsersList, status, error, isUpdated } = useSelector(selectAdmin);
 
 	useEffect(() => {
@@ -37,6 +39,9 @@ const AllUser = () => {
 
 	const deleteUser = (id) => {
 		dispatch(deleteUserAdmin(id));
+	};
+	const updateUserHandler = (id) => {
+		navigate(`/admin/user/${id}`)
 	};
 
 	return (
@@ -63,6 +68,7 @@ const AllUser = () => {
 										key={user._id}
 										user={user}
 										deleteUser={deleteUser}
+										updateUserHandler={updateUserHandler}
 									/>
 								))}
 						</div>

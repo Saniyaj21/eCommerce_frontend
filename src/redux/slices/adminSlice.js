@@ -6,6 +6,10 @@ import { base_url } from '../../index'
 const initialState = {
     products: [],
     allUsersList: [],
+    selectedUser: {},
+    allOrders: [],
+    totalAmount: 0,
+    productReviews: [],
     status: 'idle',
     error: null,
     isUpdated: false,
@@ -93,6 +97,39 @@ export const allUsers = createAsyncThunk('admin/allUsers', async () => {
     return response.data;
 });
 
+// get single user details
+export const singleUserDetailsAdmin = createAsyncThunk('admin/singleUserDetailsAdmin', async ({ id }) => {
+
+    const response = await axios.get(`${base_url}/api/user/admin/users/${id}`,
+
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        })
+
+
+    return response.data;
+});
+
+// update user role
+export const updateUserRoleAdmin = createAsyncThunk('admin/updateUserRoleAdmin', async ({ id, myForm }) => {
+
+    const response = await axios.patch(`${base_url}/api/user/admin/users/${id}`,
+        myForm,
+
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        })
+
+
+    return response.data;
+});
+
 // delete User
 export const deleteUserAdmin = createAsyncThunk('admin/deleteUserAdmin', async (id) => {
 
@@ -108,6 +145,72 @@ export const deleteUserAdmin = createAsyncThunk('admin/deleteUserAdmin', async (
 
     return response.data;
 });
+
+// get all orders -> admin
+export const getAllOrdersAdmin = createAsyncThunk('admin/getAllOrdersAdmin', async () => {
+    const response = await axios.get(`${base_url}/api/order/admin/allorders`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        });
+    return response.data;
+});
+
+// delete orders -> admin
+export const deleteOrderAdmin = createAsyncThunk('admin/deleteOrderAdmin', async ({ id }) => {
+    const response = await axios.delete(`${base_url}/api/order/admin/delete/${id}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        });
+    return response.data;
+});
+
+// update orders -> admin
+export const updateOrderAdmin = createAsyncThunk('admin/updateOrderAdmin', async ({ id, myForm }) => {
+    const response = await axios.patch(`${base_url}/api/order/admin/update/${id}`,
+        myForm,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        });
+    return response.data;
+});
+
+
+// get a product's reviews -> admin
+export const productsReviewAdmin = createAsyncThunk('admin/productsReviewAdmin', async ( id ) => {
+    const response = await axios.get(`${base_url}/api/products/review/one?id=${id}`,
+
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        });
+    return response.data;
+});
+
+// delete a product's review -> admin
+export const deleteProductsReviewAdmin = createAsyncThunk('admin/deleteProductsReviewAdmin', async ( {productId, reviewId} ) => {
+    const response = await axios.delete(`${base_url}/api/products/review?productId=${productId}&id=${reviewId}`,
+
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        });
+    return response.data;
+});
+
+
 
 
 
@@ -209,6 +312,38 @@ const adminSlice = createSlice({
                 state.error = action.error.message
 
             })
+
+            // get single user details
+            .addCase(singleUserDetailsAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(singleUserDetailsAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.selectedUser = action.payload.user
+
+            })
+            .addCase(singleUserDetailsAdmin.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message
+
+            })
+
+            // update user role
+            .addCase(updateUserRoleAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null;
+            })
+            .addCase(updateUserRoleAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.selectedUser = action.payload.user
+
+            })
+            .addCase(updateUserRoleAdmin.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message
+
+            })
             // deleteUserAdmin
             .addCase(deleteUserAdmin.pending, (state) => {
                 state.status = 'loading';
@@ -230,6 +365,92 @@ const adminSlice = createSlice({
                 state.isUpdated = false
 
             })
+
+
+            // get all orders
+            .addCase(getAllOrdersAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null
+            })
+            .addCase(getAllOrdersAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.allOrders = action.payload.orders
+                state.totalAmount = action.payload.totalAmount
+            })
+            .addCase(getAllOrdersAdmin.rejected, (state, action) => {
+
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+
+            // delete order
+            .addCase(deleteOrderAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null
+                state.isUpdated = false
+            })
+            .addCase(deleteOrderAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.isUpdated = true
+            })
+            .addCase(deleteOrderAdmin.rejected, (state, action) => {
+
+                state.status = 'failed';
+                state.error = action.error.message;
+                state.isUpdated = false
+            })
+
+            // update order
+            .addCase(updateOrderAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null
+                state.isUpdated = false
+            })
+            .addCase(updateOrderAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.isUpdated = true
+            })
+            .addCase(updateOrderAdmin.rejected, (state, action) => {
+
+                state.status = 'failed';
+                state.error = action.error.message;
+                state.isUpdated = false
+            })
+
+            // get a products all reviews
+            .addCase(productsReviewAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null
+
+            })
+            .addCase(productsReviewAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.productReviews = action.payload.reviews
+            })
+            .addCase(productsReviewAdmin.rejected, (state, action) => {
+
+                state.status = 'failed';
+                state.error = action.error.message;
+
+            })
+
+            // delete a product  reviews
+            .addCase(deleteProductsReviewAdmin.pending, (state) => {
+                state.status = 'loading';
+                state.error = null
+
+            })
+            .addCase(deleteProductsReviewAdmin.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.productReviews = action.payload.reviews
+            })
+            .addCase(deleteProductsReviewAdmin.rejected, (state, action) => {
+
+                state.status = 'failed';
+                state.error = action.error.message;
+
+            })
+
     },
 });
 

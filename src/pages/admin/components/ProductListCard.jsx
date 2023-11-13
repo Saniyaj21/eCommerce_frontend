@@ -1,11 +1,11 @@
-import React from "react";
-
+import {Link} from "react-router-dom"
 const ProductListCard = ({ product, deleteHandler, updateProduct }) => {
 	return (
 		<div className='productList-card'>
 			<div>
                 <div>{product.name}</div>
                 <div className="productList-id-div">{product._id}</div>
+                <div><Link to={`/admin/reviews/${product._id}`}>See Reviews</Link> </div>
             
             </div>
 			<div>{product.Stock}</div>

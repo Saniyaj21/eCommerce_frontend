@@ -78,7 +78,7 @@ const CartPage = () => {
 							<span>
 								Total Price :{" "}
 								{`₹${cartItems.reduce(
-									(acc, item) => acc + item.quantity * item.product.price,
+									(acc, item) => acc + item?.quantity * item?.product?.price,
 									0
 								)}`}{" "}
 							</span>

@@ -1,6 +1,6 @@
 import SideBar from "./components/SideBar";
 import "./dashBoard.scss";
-import { Doughnut, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -9,8 +9,21 @@ import {
 	LineElement,
 	Legend,
 } from "chart.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { allUsers, getAllOrdersAdmin, getAllProductsAdmin, selectAdmin } from "../../redux/slices/adminSlice";
+import { Link } from "react-router-dom";
 
 const DashBoard = () => {
+	const dispatch = useDispatch();
+	const { totalAmount , allOrders, products, allUsersList} = useSelector(selectAdmin);
+
+	useEffect(() => {
+		dispatch(getAllOrdersAdmin());
+		dispatch(getAllProductsAdmin());
+		dispatch(allUsers());
+	}, [dispatch]);
+
 	ChartJS.register(
 		CategoryScale,
 		LinearScale,
@@ -27,7 +40,7 @@ const DashBoard = () => {
 				label: "TOTAL AMOUNT",
 				backgroundColor: ["tomato"],
 				hoverBackgroundColor: ["rgb(197, 72, 49)"],
-				data: [0, 4000],
+				data: [0, totalAmount],
 			},
 		],
 	};
@@ -40,22 +53,22 @@ const DashBoard = () => {
 			<div className='dash-right'>
 				<div className='dash-head'>
 					<h2>Dashboard</h2>
-					<b>Total Amount : 3000</b>
+					<b>Total Amount : ₹{totalAmount}</b>
 				</div>
 
 				<div className='circle-container'>
-					<div>
-						<div>12</div>
+					<Link to={'/admin/products'}>
+						<div>{products.length}</div>
 						<p>Products</p>
-					</div>
-					<div>
-						<div>12</div>
+					</Link>
+					<Link to={'/admin/orders'}>
+						<div>{allOrders.length}</div>
 						<p>Orders</p>
-					</div>
-					<div>
-						<div>13</div>
+					</Link>
+					<Link to={'/admin/users'}>
+						<div>{allUsersList.length}</div>
 						<p>Users</p>
-					</div>
+					</Link>
 				</div>
 				<div>
 					<div className='lineChart'>

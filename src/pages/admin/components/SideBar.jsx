@@ -16,7 +16,7 @@ const SideBar = () => {
 				{" "}
 				<div><i className="fa-solid fa-users"></i> Users</div>
 			</Link>
-			<Link to={"/"}>
+			<Link to={"/admin/reviews"}>
 				{" "}
 				<div><i className="fa-solid fa-comment"></i> Reviews</div>
 			</Link>{" "}
