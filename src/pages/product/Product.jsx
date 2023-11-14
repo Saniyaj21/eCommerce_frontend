@@ -53,7 +53,18 @@ const Product = () => {
 
 	// category filter
 	const [category, setCategory] = useState("");
-	const categories = ["smartphones", "laptops", "fragrances"];
+	
+	const categories = [
+		"Laptop",
+		"Footwear",
+		"Bottom",
+		"Tops",
+		"Attire",
+		"Camera",
+		"SmartPhones",
+	];
+	
+	// const categories = ["smartphones", "laptops", "fragrances"];
 
 	useEffect(() => {
 		if (keyword) {

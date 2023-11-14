@@ -31,6 +31,7 @@ const UpdateOrder = () => {
 
 		myForm.set("status", status);
 		dispatch(updateOrderAdmin({ id, myForm }));
+		toast.success("Order Updated")
 	};
 
 	useEffect(() => {
@@ -57,7 +58,7 @@ const UpdateOrder = () => {
 								<h2>Shipping Info</h2>
 								<div className='confirmshippingAreaBox'>
 									<div>
-										<p>Name:</p>
+										<p className="redHighlight">Name:</p>
 										<span>{singleOrder?.user?.name}</span>
 									</div>
 									<div>
@@ -68,7 +69,7 @@ const UpdateOrder = () => {
 										<p>Address:</p>
 										<span>{address}</span>
 									</div>
-									<div>
+									<div >
 										<p>Status:</p>
 										<span>{singleOrder.orderStatus}</span>
 									</div>
@@ -100,7 +101,7 @@ const UpdateOrder = () => {
 									className='updateOrderForm'
 									onSubmit={updateOrderSubmitHandler}
 								>
-									<h1>Process Order</h1>
+									<h2>Process Order</h2>
 
 									<div>
 										<select onChange={(e) => setStatus(e.target.value)}>

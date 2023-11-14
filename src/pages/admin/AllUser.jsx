@@ -33,7 +33,7 @@ const AllUser = () => {
 		}
 		if (isUpdated) {
 			dispatch(allUsers());
-			toast.success("")
+			
 		}
 	}, [dispatch, error, isUpdated]);
 

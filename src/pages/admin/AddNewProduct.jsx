@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./productList.scss";
 import MetaData from "../layout/MetaData";
@@ -6,15 +6,16 @@ import { toast } from "react-hot-toast";
 import Loading from "../layout/loading/Loading";
 import {
 	createProductAdmin,
-	getAllProductsAdmin,
 	selectAdmin,
 } from "../../redux/slices/adminSlice";
 import SideBar from "./components/SideBar";
 import { Carousel } from "react-responsive-carousel";
-
+import './addNewProduct.scss';
+import { useNavigate } from "react-router-dom";
 const AddNewProduct = () => {
 	const dispatch = useDispatch();
 	const { status } = useSelector(selectAdmin);
+	const navigate = useNavigate()
 
 	const [name, setName] = useState("");
 	const [price, setPrice] = useState(0);
@@ -53,6 +54,7 @@ const AddNewProduct = () => {
 			myForm.append("images", image);
 		});
 		dispatch(createProductAdmin(myForm));
+		
 	};
 
 	const createProductImagesChange = (e) => {
@@ -81,6 +83,7 @@ const AddNewProduct = () => {
 				<Loading />
 			) : (
 				<>
+				
 					<MetaData title='Add New Product' />
 
 					<div className='dashboard'>
@@ -181,7 +184,7 @@ const AddNewProduct = () => {
 									</Carousel>
 								</div>
 
-								<button type='submit'>Submit</button>
+								<button className="button-new-product" type='submit'>Submit</button>
 							</form>
 						</div>
 					</div>
