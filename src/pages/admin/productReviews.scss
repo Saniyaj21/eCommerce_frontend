@@ -1,0 +1,71 @@
+.search-product-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >form{
+        max-width: 300px;
+
+        >h3{
+            padding: 15px 0px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        >input, button{
+            padding: 5px;
+            outline: none;
+            border: 1px solid tomato;
+            border-radius: 5px;
+            margin: 5px 0px;
+            height: 30px;
+        }
+        >button{
+            background-color: tomato;
+            color: white;
+        }
+    }
+}
+
+
+.review-box {
+	// background-color: red;
+	> h1 {
+		color: tomato;
+	}
+	> h3 {
+		padding: 10px 0px;
+		text-transform: capitalize;
+		color: green;
+	}
+	> div {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		> div {
+			background-color: rgb(216, 241, 216);
+            width: 300px;
+			border-radius: 5px;
+			padding: 5px 15px;
+			margin: 5px;
+			> div {
+				margin: 5px 0px;
+				text-transform: capitalize;
+
+				> button {
+					padding: 10px 15px;
+					border-radius: 10px;
+					border: 0px;
+					color: white;
+					background-color: tomato;
+					margin-top: 10px;
+					font-family: "Roboto";
+					font-size: 15px;
+					cursor: pointer;
+					&:hover {
+						background-color: rgb(252, 77, 47);
+					}
+				}
+			}
+		}
+	}
+}

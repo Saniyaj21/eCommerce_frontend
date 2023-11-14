@@ -11,6 +11,9 @@ import AdminReviewCard from "./components/AdminReviewCard";
 import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { fetchProductDetails, selectProductById } from "../../redux/slices/product";
+import './productReviews.scss';
+
+
 
 const ProductReviews = () => {
 	const dispatch = useDispatch();
@@ -48,7 +51,7 @@ const ProductReviews = () => {
 					<SideBar />
 				</div>
 				<div className='dash-right'>
-					<div>
+					<div className="search-product-box">
 						{id ? (
 							""
 						) : (
@@ -63,9 +66,10 @@ const ProductReviews = () => {
 						)}
 					</div>
 
-					<div>
+					<div className="review-box">
 						<h1>Products Reviews</h1>
 						<h3>Product Name : {selectedProduct?.product?.name}</h3>
+						<div>
 						{productReviews &&
 							productReviews.map((item) => (
 								<AdminReviewCard
@@ -74,6 +78,7 @@ const ProductReviews = () => {
 									deleteReviewHandler={deleteReviewHandler}
 								/>
 							))}
+						</div>
 					</div>
 				</div>
 			</div>
