@@ -37,9 +37,9 @@ const CartPage = () => {
 		toast.success("Quantity Updated");
 	};
 
-	const orderHandler =() =>{
-		navigate('/order')
-	}
+	const orderHandler = () => {
+		navigate("/order");
+	};
 
 	return (
 		<>
@@ -47,19 +47,21 @@ const CartPage = () => {
 				<Loading />
 			) : (
 				<>
-					<div className='main-item-container'>
-						<h2>In Cart</h2>
-						{cartItems?.length < 1 ? (
-							<div className='no-items-cart'>
-								<p>No Items in cart</p>
-								<Link to={"/"} className='no-items-link'>
-									View Products
-								</Link>
-							</div>
-						) : (
-							""
-						)}
+					
+						<h2 className="in-cart">In Cart</h2>
+					
+					{cartItems?.length < 1 ? (
+						<div className='no-items-cart'>
+							<p>No Items in cart</p>
+							<Link to={"/"} className='no-items-link'>
+								View Products
+							</Link>
+						</div>
+					) : (
+						""
+					)}
 
+					<div className='main-item-container'>
 						{cartItems &&
 							cartItems?.map((item) => (
 								<CartCard

@@ -1,18 +1,21 @@
 .main-item-container {
 	display: flex;
+	min-height: 100vh;
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	> h2 {
-		color: tomato;
-		padding: 10px;
-		text-align: center;
-		border-bottom: 2px solid tomato;
-		width: 100%;
-	}
+	
+}
+.in-cart{
+	color: tomato;
+	padding: 10px;
+	text-align: center;
+	border-bottom: 2px solid tomato;
+	width: 100%;
 }
 .no-items-cart {
-	padding: 40px;
+	padding: 10px;
+	height: 100px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
