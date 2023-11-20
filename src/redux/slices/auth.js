@@ -16,7 +16,7 @@ const initialState = {
 // Define an async thunk to fetch products from the API
 export const loginUser = createAsyncThunk('user/loginUser', async ({ loginEmail, loginPassword }) => {
 
-  const response = await axios.post(`http://127.0.0.1:8080/api/user/login`,
+  const response = await axios.post(`${base_url}/api/user/login`,
     {
       email: loginEmail,
       password: loginPassword
