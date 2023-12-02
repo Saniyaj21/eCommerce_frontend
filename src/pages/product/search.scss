@@ -1,24 +1,31 @@
-.search-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    >form{
-        >input{
-            height: 30px;
-            width: 200px;
-            border-radius: 3px 0px 0px 3px;
-            border: 2px solid var(--blue);
+.search-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	> form {
+        width: 300px;
+		> input {
+			height: 35px;
+			width: 200px;
+			border-radius: 10px 0px 0px 10px;
+			border: 2px solid tomato;
+			border-right: 0px;
+			outline: none;
+			padding-left: 10px;
             border-right: 0px;
-            outline: none;
-           padding-left: 10px;
-        }
-        >button{
-            border-radius: 0px 3px 3px 0px;
-            height: 30px;
-            width: 80px;
-            background: transparent;
-            cursor: pointer;
-        }
-    }
+		}
+		> button {
+			border-radius: 0px 10px 10px 0px;
+			height: 35px;
+			width: 100px;
+			background: transparent;
+			cursor: pointer;
+            border: 2px solid tomato;
+            background-color: tomato;
+            color: white;
+            
+            border-left: 0px;
+		}
+	}
 }

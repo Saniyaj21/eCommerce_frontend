@@ -26,6 +26,8 @@ const Product = () => {
 	let resultPerPage = res?.products.resultPerPage;
 	let totalPage = productsCount / resultPerPage;
 
+	console.log(products);
+
 	const handlePrevClick = () => {
 		if (currentPage > 1) {
 			setCurrentPage(currentPage - 1);
@@ -39,7 +41,7 @@ const Product = () => {
 	};
 	const handleToggleFilter = () => {
 		setIsOpen(!isOpen);
-		console.log(isOpen);
+		
 	};
 
 	// price filter
@@ -102,7 +104,7 @@ const Product = () => {
 				<>
 					<MetaData title={`ECOMMERCE || ${keyword ? keyword : "Products"}`} />
 
-					<h2 className='homeHeading'>
+					<h2 className='homeHeading mr-top'>
 						{`${keyword ? "Searched" : "All"}`} Products
 					</h2>
 
@@ -168,12 +170,12 @@ const Product = () => {
 							))}
 					</div>
 
-					{productsCount > resultPerPage && (
+					{!keyword && productsCount >= resultPerPage && (
 						<div className='page-box'>
 							<button className='paginate-btn' onClick={handlePrevClick}>
 								PREV
 							</button>
-							<span>{`${currentPage} of ${totalPage} `}</span>
+							<span>{`${currentPage} of ${Math.ceil(totalPage)} `}</span>
 							<button className='paginate-btn' onClick={handleNextClick}>
 								NEXT
 							</button>

@@ -23,7 +23,7 @@ const Search = () => {
 	};
 
 	return (
-		<div className='search-box' id='search'>
+		<div className='search-box mr-top' id='search'>
 			<form onSubmit={handleSubmit}>
 				<input
 					type='text'
@@ -31,7 +31,7 @@ const Search = () => {
 					onChange={handleInputChange} // Add an onChange handler to update the state
 				placeholder="Enter a product name"
 				/>
-				<button type='submit'>Search</button>
+				<button type='submit'><i className="fa-solid fa-magnifying-glass"></i> Search </button>
 			</form>
 		</div>
 	);

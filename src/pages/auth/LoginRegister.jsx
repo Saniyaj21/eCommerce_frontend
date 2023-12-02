@@ -74,7 +74,7 @@ const LoginRegister = () => {
 				<Loading />
 			) : (
 				<>
-					<div className='auth-btn-group'>
+					<div className='auth-btn-group mr-top'>
 						<div>
 							<div
 								className={`slider ${

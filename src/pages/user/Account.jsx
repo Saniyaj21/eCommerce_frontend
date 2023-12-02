@@ -28,7 +28,7 @@ const Account = () => {
 				<Loading />
 			) : (
 				<>
-					<div className='profileContainer'>
+					<div className='profileContainer mr-top'>
 						<div>
 							<img src={user?.avatar?.url} alt={user?.name} />
 							<Link to='/account/update'>Edit Profile</Link>
