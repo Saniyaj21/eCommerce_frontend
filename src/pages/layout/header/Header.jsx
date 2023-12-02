@@ -32,36 +32,36 @@ const Header = () => {
 			</nav>
 			<div className={`side-block ${isNavMobile ? "toggle-side-block" : ""}`}>
 				<ul className='ul'>
-					<Link className='nav-a' to={"/"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/"}>
 						<li className='nav-li'>
 							{" "}
 							<i className='fa-solid fa-house'></i>Home
 						</li>
 					</Link>
-					<Link className='nav-a' to={"/products"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/products"}>
 						<li className='nav-li'>
 							{" "}
 							<i className='fa-solid fa-bag-shopping'></i>Products
 						</li>
 					</Link>
-					<Link className='nav-a' to={"/search"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/search"}>
 						<li className='nav-li'>
 							{" "}
 							<i className='fa-brands fa-searchengin'></i> Search
 						</li>
 					</Link>
-					<Link className='nav-a' to={"/cart"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/cart"}>
 						<li className='nav-li'>
 							<i className='fa-solid fa-cart-shopping'></i>Cart
 						</li>
 					</Link>
-					<Link className='nav-a' to={"/account"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/account"}>
 						<li className='nav-li'>
 							<i className='fa-solid fa-user'></i>Account
 						</li>
 					</Link>
 					
-					<Link className='nav-a' to={"/login"}>
+					<Link onClick={()=>toggleMenu()} className='nav-a' to={"/login"}>
 						<li className='nav-li'>
 							<AuthHeader />
 						</li>

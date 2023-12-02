@@ -4,11 +4,7 @@ import "./productList.scss";
 import MetaData from "../layout/MetaData";
 import { toast } from "react-hot-toast";
 import Loading from "../layout/loading/Loading";
-import {
-
-	selectAdmin,
-	updateProduct,
-} from "../../redux/slices/adminSlice";
+import { selectAdmin, updateProduct } from "../../redux/slices/adminSlice";
 import SideBar from "./components/SideBar";
 import { Carousel } from "react-responsive-carousel";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -23,10 +19,10 @@ const UpdateProduct = () => {
 	const { id } = params;
 	const dispatch = useDispatch();
 	const { selectedProduct } = useSelector(selectProductById);
-	const { isUpdated, status , isProductUpdated} = useSelector(selectAdmin);
+	const { isUpdated, status, isProductUpdated } = useSelector(selectAdmin);
 	let product = selectedProduct?.product;
 
-	const [name, setName] = useState(product?.name);
+	const [name, setName] = useState(product.name);
 	const [price, setPrice] = useState(product?.price);
 	const [description, setDescription] = useState(product?.description);
 	const [category, setCategory] = useState(product?.category);
@@ -35,7 +31,7 @@ const UpdateProduct = () => {
 	const [oldImages, setOldImages] = useState(product?.images);
 	const [imagesPreview, setImagesPreview] = useState([]);
 
-	console.log(name, price, Stock, description, category, oldImages);
+	console.log(oldImages);
 
 	const categories = [
 		"Laptop",
@@ -53,7 +49,6 @@ const UpdateProduct = () => {
 		dispatch(fetchProductDetails(id));
 	}, [dispatch, id, isUpdated]);
 
-
 	const updateProductSubmitHandler = (e) => {
 		e.preventDefault();
 
@@ -70,13 +65,10 @@ const UpdateProduct = () => {
 		});
 
 		dispatch(updateProduct({ id, myForm }));
-
-		
 	};
-	if( isProductUpdated === true){
+	if (isProductUpdated === true) {
 		toast.success("Product updated");
 		navigate(`/admin/dashboard`);
-
 	}
 
 	const updaetProductImagesChange = (e) => {
@@ -195,7 +187,7 @@ const UpdateProduct = () => {
 										interval={3000}
 										showIndicators={true}
 									>
-										{imagesPreview
+										{imagesPreview.length !== 0
 											? imagesPreview &&
 											  imagesPreview.map((image, index) => (
 													<div key={index}>
@@ -210,7 +202,6 @@ const UpdateProduct = () => {
 											  ))}
 									</Carousel>
 								</div>
-
 								<button type='submit'>Update</button>
 							</form>
 						</div>

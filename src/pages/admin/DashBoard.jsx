@@ -46,7 +46,7 @@ const DashBoard = () => {
 	};
 
 	return (
-		<div className='dashboard'>
+		<div className='dashboard mr-top'>
 			<div className='dash-sidebar'>
 				<SideBar />
 			</div>

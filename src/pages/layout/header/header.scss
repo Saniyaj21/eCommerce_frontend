@@ -6,11 +6,10 @@ header {
 	z-index: 20;
 	display: flex;
 	justify-content: center;
-	position: sticky;
+	position: fixed;
 	top: 0px;
 
 	width: 100%;
-	margin-top: 20px;
 	transition: 0.2s;
 }
 .nav {
