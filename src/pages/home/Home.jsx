@@ -10,7 +10,6 @@ import Loading from "../layout/loading/Loading";
 const Home = () => {
 	const dispatch = useDispatch();
 	const res = useSelector(selectAllProducts);
-	
 
 	const products = res?.products.products; // inside products state we are getting products array
 	const status = res?.status;
@@ -26,20 +25,19 @@ const Home = () => {
 
 	return (
 		<>
+			<div className='banner'>
+				<p>Welcome to Ecommerce</p>
+				<h1>FIND AMAZING PRODUCTS BELOW</h1>
+
+				<a href='#container'>
+					<button>Shop Now</button>
+				</a>
+			</div>
 			{status === "loading" ? (
 				<Loading />
 			) : (
 				<>
 					<MetaData title='ECOMMERCE' />
-
-					<div className='banner'>
-						<p>Welcome to Ecommerce</p>
-						<h1>FIND AMAZING PRODUCTS BELOW</h1>
-
-						<a href='#container'>
-							<button>Shop Now</button>
-						</a>
-					</div>
 
 					<h2 className='homeHeading'>Featured Products</h2>
 
