@@ -14,5 +14,5 @@ root.render(
 
 // base url
 // export const base_url = "http://localhost:8080"
-export const base_url = 'https://cloudshop.onrender.com'
+export const base_url = 'https://cloudshop-server.vercel.app'
 

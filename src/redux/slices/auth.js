@@ -150,7 +150,7 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user;
         state.isAuthenticated = true;
-        
+
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
