@@ -1,9 +1,11 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import api from '../../utils/apiInterceptor.js'
+import api from '../../utils/axiosInterceptor.js'
 import { base_url } from '../../index'
 
 const initialState = {
+  token: localStorage.getItem('token') || null,
   user: {},
   isAuthenticated: false,
   status: 'idle',
@@ -16,7 +18,7 @@ const initialState = {
 // Define an async thunk to fetch products from the API
 export const loginUser = createAsyncThunk('user/loginUser', async ({ loginEmail, loginPassword }) => {
 
-  const response = await axios.post(`${base_url}/api/user/login`,
+  const response = await api.post(`${base_url}/api/user/login`,
     {
       email: loginEmail,
       password: loginPassword
@@ -34,7 +36,7 @@ export const loginUser = createAsyncThunk('user/loginUser', async ({ loginEmail,
 // register user
 export const registerUser = createAsyncThunk('user/registerUser', async (myForm) => {
 
-  const response = await axios.post(`${base_url}/api/user/register`, myForm, {
+  const response = await api.post(`${base_url}/api/user/register`, myForm, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -47,7 +49,7 @@ export const registerUser = createAsyncThunk('user/registerUser', async (myForm)
 // logout user
 export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
 
-  const response = await axios.get(`${base_url}/api/user/logout`,
+  const response = await api.get(`${base_url}/api/user/logout`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +63,7 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
 // get user details
 export const getUser = createAsyncThunk('user/getUser', async () => {
 
-  const response = await axios.get(`${base_url}/api/user/profile`, {
+  const response = await api.get(`${base_url}/api/user/profile`, {
     withCredentials: true,
   });
 
@@ -72,7 +74,7 @@ export const getUser = createAsyncThunk('user/getUser', async () => {
 // update profile
 export const updateProfile = createAsyncThunk('user/updateProfile', async (myForm) => {
 
-  const response = await axios.patch(`${base_url}/api/user/profile/update`,
+  const response = await api.patch(`${base_url}/api/user/profile/update`,
     myForm,
     {
       headers: {
@@ -88,7 +90,7 @@ export const updateProfile = createAsyncThunk('user/updateProfile', async (myFor
 // patch : oldPassword, newPassword, confirmPassword
 export const updatePassword = createAsyncThunk('user/updatePassword', async ({ oldPassword, newPassword, confirmPassword }) => {
 
-  const response = await axios.patch(`${base_url}/api/user/password/update`,
+  const response = await api.patch(`${base_url}/api/user/password/update`,
     { oldPassword, newPassword, confirmPassword },
     {
       headers: {
@@ -103,7 +105,7 @@ export const updatePassword = createAsyncThunk('user/updatePassword', async ({ o
 // send reset password OTP
 export const sendOTP = createAsyncThunk('user/sendOTP', async ({ email }) => {
 
-  const response = await axios.post(`${base_url}/api/user/password/forgot`,
+  const response = await api.post(`${base_url}/api/user/password/forgot`,
     {
       email
     },
@@ -121,7 +123,7 @@ export const sendOTP = createAsyncThunk('user/sendOTP', async ({ email }) => {
 // reset password and OTP verification
 export const resetPassword = createAsyncThunk('user/resetPassword', async ({ resetPasswordOTP, password, confirmPassword }) => {
 
-  const response = await axios.patch(`${base_url}/api/user/password/reset`,
+  const response = await api.patch(`${base_url}/api/user/password/reset`,
     { resetPasswordOTP, password, confirmPassword },
     {
       headers: {
@@ -141,7 +143,8 @@ const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder  // login user
+    builder
+      // login user
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
         state.error = null
@@ -150,6 +153,8 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
 
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -166,6 +171,8 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(registerUser.rejected, (state, action) => {
 
@@ -183,6 +190,8 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = null;
         state.isAuthenticated = false;
+        localStorage.setItem('token', null);
+        state.token = null;
 
       })
       .addCase(logoutUser.rejected, (state, action) => {
@@ -233,6 +242,9 @@ const userSlice = createSlice({
       .addCase(updatePassword.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.isUpdated = true
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+        state.isAuthenticated = true
       })
       .addCase(updatePassword.rejected, (state, action) => {
         state.status = 'failed';
@@ -263,6 +275,8 @@ const userSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.user;
         state.isAuthenticated = true;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
 
       })
       .addCase(resetPassword.rejected, (state, action) => {

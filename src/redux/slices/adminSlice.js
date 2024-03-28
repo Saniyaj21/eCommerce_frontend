@@ -1,6 +1,7 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import api from '../../utils/apiInterceptor.js'
+import api from '../../utils/axiosInterceptor.js'
 import { base_url } from '../../index'
 
 const initialState = {
@@ -21,7 +22,7 @@ const initialState = {
 // get all products  --> admin only
 export const getAllProductsAdmin = createAsyncThunk('admin/allProducts', async () => {
 
-    const response = await axios.get(`${base_url}/api/products/admin/all`,
+    const response = await api.get(`${base_url}/api/products/admin/all`,
 
         {
             headers: {
@@ -36,7 +37,7 @@ export const getAllProductsAdmin = createAsyncThunk('admin/allProducts', async (
 // create product  --> admin only
 export const createProductAdmin = createAsyncThunk('admin/createProductAdmin', async (myForm) => {
 
-    const response = await axios.post(`${base_url}/api/products/admin/new`,
+    const response = await api.post(`${base_url}/api/products/admin/new`,
         myForm,
         {
             headers: {
@@ -52,7 +53,7 @@ export const createProductAdmin = createAsyncThunk('admin/createProductAdmin', a
 // delete a product
 export const deleteProduct = createAsyncThunk('admin/deleteProduct', async ({ id }) => {
 
-    const response = await axios.delete(`${base_url}/api/products/admin/${id}`,
+    const response = await api.delete(`${base_url}/api/products/admin/${id}`,
 
         {
             headers: {
@@ -68,7 +69,7 @@ export const deleteProduct = createAsyncThunk('admin/deleteProduct', async ({ id
 // updaet a product
 export const updateProduct = createAsyncThunk('admin/updateProduct', async ({ id, myForm }) => {
 
-    const response = await axios.patch(`${base_url}/api/products/admin/${id}`,
+    const response = await api.patch(`${base_url}/api/products/admin/${id}`,
         myForm,
         {
             headers: {
@@ -84,7 +85,7 @@ export const updateProduct = createAsyncThunk('admin/updateProduct', async ({ id
 // allUsers
 export const allUsers = createAsyncThunk('admin/allUsers', async () => {
 
-    const response = await axios.get(`${base_url}/api/user/admin/users`,
+    const response = await api.get(`${base_url}/api/user/admin/users`,
 
         {
             headers: {
@@ -100,7 +101,7 @@ export const allUsers = createAsyncThunk('admin/allUsers', async () => {
 // get single user details
 export const singleUserDetailsAdmin = createAsyncThunk('admin/singleUserDetailsAdmin', async ({ id }) => {
 
-    const response = await axios.get(`${base_url}/api/user/admin/users/${id}`,
+    const response = await api.get(`${base_url}/api/user/admin/users/${id}`,
 
         {
             headers: {
@@ -116,7 +117,7 @@ export const singleUserDetailsAdmin = createAsyncThunk('admin/singleUserDetailsA
 // update user role
 export const updateUserRoleAdmin = createAsyncThunk('admin/updateUserRoleAdmin', async ({ id, myForm }) => {
 
-    const response = await axios.patch(`${base_url}/api/user/admin/users/${id}`,
+    const response = await api.patch(`${base_url}/api/user/admin/users/${id}`,
         myForm,
 
         {
@@ -133,7 +134,7 @@ export const updateUserRoleAdmin = createAsyncThunk('admin/updateUserRoleAdmin',
 // delete User
 export const deleteUserAdmin = createAsyncThunk('admin/deleteUserAdmin', async (id) => {
 
-    const response = await axios.delete(`${base_url}/api/user/admin/users/${id}`,
+    const response = await api.delete(`${base_url}/api/user/admin/users/${id}`,
 
         {
             headers: {
@@ -148,7 +149,7 @@ export const deleteUserAdmin = createAsyncThunk('admin/deleteUserAdmin', async (
 
 // get all orders -> admin
 export const getAllOrdersAdmin = createAsyncThunk('admin/getAllOrdersAdmin', async () => {
-    const response = await axios.get(`${base_url}/api/order/admin/allorders`,
+    const response = await api.get(`${base_url}/api/order/admin/allorders`,
         {
             headers: {
                 "Content-Type": "application/json",
@@ -160,7 +161,7 @@ export const getAllOrdersAdmin = createAsyncThunk('admin/getAllOrdersAdmin', asy
 
 // delete orders -> admin
 export const deleteOrderAdmin = createAsyncThunk('admin/deleteOrderAdmin', async ({ id }) => {
-    const response = await axios.delete(`${base_url}/api/order/admin/delete/${id}`,
+    const response = await api.delete(`${base_url}/api/order/admin/delete/${id}`,
         {
             headers: {
                 "Content-Type": "application/json",
@@ -172,7 +173,7 @@ export const deleteOrderAdmin = createAsyncThunk('admin/deleteOrderAdmin', async
 
 // update orders -> admin
 export const updateOrderAdmin = createAsyncThunk('admin/updateOrderAdmin', async ({ id, myForm }) => {
-    const response = await axios.patch(`${base_url}/api/order/admin/update/${id}`,
+    const response = await api.patch(`${base_url}/api/order/admin/update/${id}`,
         myForm,
         {
             headers: {
@@ -186,7 +187,7 @@ export const updateOrderAdmin = createAsyncThunk('admin/updateOrderAdmin', async
 
 // get a product's reviews -> admin
 export const productsReviewAdmin = createAsyncThunk('admin/productsReviewAdmin', async ( id ) => {
-    const response = await axios.get(`${base_url}/api/products/review/one?id=${id}`,
+    const response = await api.get(`${base_url}/api/products/review/one?id=${id}`,
 
         {
             headers: {
@@ -199,7 +200,7 @@ export const productsReviewAdmin = createAsyncThunk('admin/productsReviewAdmin',
 
 // delete a product's review -> admin
 export const deleteProductsReviewAdmin = createAsyncThunk('admin/deleteProductsReviewAdmin', async ( {productId, reviewId} ) => {
-    const response = await axios.delete(`${base_url}/api/products/review?productId=${productId}&id=${reviewId}`,
+    const response = await api.delete(`${base_url}/api/products/review?productId=${productId}&id=${reviewId}`,
 
         {
             headers: {

@@ -61,7 +61,7 @@ const LoginRegister = () => {
 			myForm.set("name", userName);
 			myForm.set("email", email);
 			myForm.set("password", password);
-			console.log(userName, email, password);
+		
 			myForm.set("avatar", avatar);
 			dispatch(registerUser(myForm));
 		}

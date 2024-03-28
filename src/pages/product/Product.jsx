@@ -26,7 +26,7 @@ const Product = () => {
 	let resultPerPage = res?.products.resultPerPage;
 	let totalPage = productsCount / resultPerPage;
 
-	console.log(products);
+
 
 	const handlePrevClick = () => {
 		if (currentPage > 1) {

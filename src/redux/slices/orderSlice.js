@@ -1,6 +1,7 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import api from '../../utils/apiInterceptor.js'
+import api from '../../utils/axiosInterceptor.js'
 import { base_url } from '../../index'
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
 
 export const createOrder = createAsyncThunk('order/createOrder', async (order) => {
 
-  const response = await axios.post(`${base_url}/api/order/new`, order,
+  const response = await api.post(`${base_url}/api/order/new`, order,
     {
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +28,7 @@ export const createOrder = createAsyncThunk('order/createOrder', async (order) =
 
 export const myOrders = createAsyncThunk('order/myOrders', async () => {
 
-  const response = await axios.get(`${base_url}/api/order/me`,
+  const response = await api.get(`${base_url}/api/order/me`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export const myOrders = createAsyncThunk('order/myOrders', async () => {
 
 export const getSingleOder = createAsyncThunk('order/getSingleOder', async ({ id }) => {
 
-  const response = await axios.get(`${base_url}/api/order/${id}`,
+  const response = await api.get(`${base_url}/api/order/${id}`,
     {
       headers: {
         "Content-Type": "application/json",

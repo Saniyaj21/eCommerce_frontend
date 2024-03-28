@@ -59,7 +59,7 @@ function App() {
       setStripeApiKey(data.stripeApiKey);
 
     } catch (error) {
-      console.log(error)
+      
     }
   }
 

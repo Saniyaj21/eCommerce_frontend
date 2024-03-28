@@ -1,6 +1,7 @@
 // productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import api from '../../utils/apiInterceptor.js'
+import api from '../../utils/axiosInterceptor.js'
 import { base_url } from '../../index'
 
 const initialState = {
@@ -13,7 +14,7 @@ const initialState = {
 
 // Define an async thunk to fetch products from the API
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get(`${base_url}/api/products`);
+  const response = await api.get(`${base_url}/api/products`);
   return response.data;
 });
 export const fetchProductsCustom = createAsyncThunk('products/fetchProductsCustom', async ({ keyword, currentPage, priceRange, ratings, category }) => {
@@ -22,17 +23,17 @@ export const fetchProductsCustom = createAsyncThunk('products/fetchProductsCusto
     link = `${base_url}/api/products?keyword=${keyword}&page=${currentPage}&price[lte]=${priceRange}&ratings[gte]=${ratings}&category=${category}`
 
   }
-  const response = await axios.get(link);
+  const response = await api.get(link);
   return response.data;
 });
 
 export const fetchProductDetails = createAsyncThunk('products/productDetails', async (id) => {
-  const response = await axios.get(`${base_url}/api/products/${id}`);
+  const response = await api.get(`${base_url}/api/products/${id}`);
   return response.data;
 });
 
 export const createReviews = createAsyncThunk('products/createReviews', async ({ productId, rating, comment }) => {
-  const response = await axios.put(`${base_url}/api/products/review`,
+  const response = await api.put(`${base_url}/api/products/review`,
 
     {
       productId,
