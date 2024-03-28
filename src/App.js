@@ -39,7 +39,7 @@ import UpdateOrder from './pages/admin/UpdateOrder';
 import EditUser from './pages/admin/EditUser';
 import ProductReviews from './pages/admin/ProductReviews';
 
-
+import api from './utils/axiosInterceptor.js'
 
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
 
   async function getStripeApiKey() {
     try {
-      const { data } = await axios.get(`${base_url}/api/payment/stripeapikey`,
+      const { data } = await api.get(`${base_url}/api/payment/stripeapikey`,
         {
           headers: {
             "Content-Type": "application/json",
