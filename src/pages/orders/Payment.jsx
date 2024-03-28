@@ -18,7 +18,7 @@ import { createOrder, selectOrder } from "../../redux/slices/orderSlice";
 import { selectUser } from "../../redux/slices/auth";
 import { selectCartItems } from "../../redux/slices/cartSlice";
 import { base_url } from "../../index";
-
+import api from '../../utils/axiosInterceptor.js'
 // import { createOrder, clearErrors } from "../../actions/orderAction";
 
 const Payment = () => {
@@ -54,7 +54,7 @@ const Payment = () => {
 		payBtn.current.disabled = true;
 
 		try {
-			const { data } = await axios.post(
+			const { data } = await api.post(
 				`${base_url}/api/payment/process`,
 				paymentData,
 				{
