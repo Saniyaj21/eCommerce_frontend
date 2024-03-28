@@ -140,8 +140,8 @@ const Product = () => {
 												type='range'
 												id='priceRange'
 												min='0'
-												max='5000'
-												step='30'
+												max='100000'
+												step='1000'
 												value={priceRange}
 												onChange={handlePriceChange}
 											/>
