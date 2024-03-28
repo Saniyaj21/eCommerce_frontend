@@ -7,10 +7,13 @@ import Loading from "../layout/loading/Loading";
 import { selectAdmin, updateProduct } from "../../redux/slices/adminSlice";
 import SideBar from "./components/SideBar";
 import { Carousel } from "react-responsive-carousel";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
+	clearError,
+	
 	fetchProductDetails,
-	selectProductById,
+	
+	selectProduct,
 } from "../../redux/slices/product";
 
 const UpdateProduct = () => {
@@ -18,20 +21,17 @@ const UpdateProduct = () => {
 	const navigate = useNavigate();
 	const { id } = params;
 	const dispatch = useDispatch();
-	const { selectedProduct } = useSelector(selectProductById);
-	const { isUpdated, status, isProductUpdated } = useSelector(selectAdmin);
-	let product = selectedProduct?.product;
+	const { isUpdated, isProductUpdated } = useSelector(selectAdmin);
+	const { selectedProduct, productStatus } = useSelector(selectProduct);
 
-	const [name, setName] = useState(product.name);
-	const [price, setPrice] = useState(product?.price);
-	const [description, setDescription] = useState(product?.description);
-	const [category, setCategory] = useState(product?.category);
-	const [Stock, setStock] = useState(product?.Stock);
+	const [name, setName] = useState("");
+	const [price, setPrice] = useState(0);
+	const [description, setDescription] = useState("");
+	const [category, setCategory] = useState("");
+	const [Stock, setStock] = useState(0);
 	const [images, setImages] = useState([]);
-	const [oldImages, setOldImages] = useState(product?.images);
+	const [oldImages, setOldImages] = useState(null);
 	const [imagesPreview, setImagesPreview] = useState([]);
-
-	console.log(oldImages);
 
 	const categories = [
 		"Laptop",
@@ -47,7 +47,15 @@ const UpdateProduct = () => {
 		setImagesPreview([]);
 		setImages([]);
 		dispatch(fetchProductDetails(id));
-	}, [dispatch, id, isUpdated]);
+
+		setName(selectedProduct?.product.name);
+		setPrice(selectedProduct?.product.price);
+		setDescription(selectedProduct?.product.description);
+		setCategory(selectedProduct?.product.category);
+		setStock(selectedProduct?.product.Stock);
+		setOldImages(selectedProduct?.product.images);
+		dispatch(clearError())
+	}, [dispatch, id, isUpdated, selectedProduct]);
 
 	const updateProductSubmitHandler = (e) => {
 		e.preventDefault();
@@ -93,7 +101,7 @@ const UpdateProduct = () => {
 
 	return (
 		<>
-			{status === "loading" ? (
+			{productStatus.productDetails === "loading" ? (
 				<Loading />
 			) : (
 				<>

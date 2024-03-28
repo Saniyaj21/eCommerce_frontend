@@ -12,19 +12,19 @@ import {
 import SideBar from "./components/SideBar";
 import ProductListCard from "./components/ProductListCard";
 import { useNavigate } from "react-router-dom";
+import { fetchProductDetails } from "../../redux/slices/product";
 
 const ProductList = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const { products, status, error, isUpdated } = useSelector(selectAdmin);
 
 	const deleteHandler = (id) => {
 		dispatch(deleteProduct({ id }));
-       
 	};
 	const updateProduct = (id) => {
-		navigate(`/admin/product/${id}`)
-       
+		
+		navigate(`/admin/product/${id}`);
 	};
 
 	useEffect(() => {

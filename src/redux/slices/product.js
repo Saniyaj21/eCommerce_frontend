@@ -8,6 +8,9 @@ const initialState = {
   products: [],
   reviews: [],
   selectedProduct: null,
+  productStatus: {
+    productDetails: 'idle'
+  },
   status: 'idle',
   error: null,
 };
@@ -57,7 +60,14 @@ export const createReviews = createAsyncThunk('products/createReviews', async ({
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    clearError: (state, action) => {
+      state.status = 'idle';
+      state.productStatus.productDetails = 'idle'
+
+    }
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.pending, (state) => {
@@ -86,13 +96,16 @@ const productSlice = createSlice({
       // seleted product
       .addCase(fetchProductDetails.pending, (state) => {
         state.status = 'loading';
+        state.productStatus.productDetails = 'loading'
       })
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.productStatus.productDetails = 'succeeded'
         state.selectedProduct = action.payload;
       })
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.status = 'failed';
+        state.productStatus.productDetails = 'failed'
         state.error = action.error.message;
       })
 
@@ -107,14 +120,15 @@ const productSlice = createSlice({
       .addCase(createReviews.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      });
+      })
 
 
   },
 });
 
 export default productSlice.reducer;
-
+export const { clearError } = productSlice.actions;
 // Export any actions you need
 export const selectAllProducts = (state) => state.product;   // state > product -> this product is in store reducer
 export const selectProductById = (state) => state.product;
+export const selectProduct = (state) => state.product;
