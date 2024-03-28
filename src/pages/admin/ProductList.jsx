@@ -35,7 +35,6 @@ const ProductList = () => {
 		}
 		if (isUpdated) {
 			dispatch(getAllProductsAdmin());
-			toast.success();
 		}
 	}, [dispatch, error, isUpdated]);
 

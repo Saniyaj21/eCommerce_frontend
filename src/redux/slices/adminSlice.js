@@ -218,7 +218,13 @@ export const deleteProductsReviewAdmin = createAsyncThunk('admin/deleteProductsR
 const adminSlice = createSlice({
     name: 'admin',
     initialState,
-    reducers: {},
+    reducers: {
+        clearAdminState: (state, action) => {
+            state.status = 'idle';
+            state.isProductUpdated = false
+      
+          }
+    },
     extraReducers: (builder) => {
         builder
 
@@ -456,6 +462,7 @@ const adminSlice = createSlice({
 });
 
 export default adminSlice.reducer;
+export const { clearAdminState } = adminSlice.actions;
 
 // Export any actions you need
 export const selectAdmin = (state) => state.admin;  

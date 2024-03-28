@@ -4,7 +4,7 @@ import "./productList.scss";
 import MetaData from "../layout/MetaData";
 import { toast } from "react-hot-toast";
 import Loading from "../layout/loading/Loading";
-import { selectAdmin, updateProduct } from "../../redux/slices/adminSlice";
+import { clearAdminState, selectAdmin, updateProduct } from "../../redux/slices/adminSlice";
 import SideBar from "./components/SideBar";
 import { Carousel } from "react-responsive-carousel";
 import { useNavigate, useParams } from "react-router-dom";
@@ -76,7 +76,8 @@ const UpdateProduct = () => {
 	};
 	if (isProductUpdated === true) {
 		toast.success("Product updated");
-		navigate(`/admin/dashboard`);
+		navigate('/admin/products')
+		dispatch(clearAdminState())
 	}
 
 	const updaetProductImagesChange = (e) => {
