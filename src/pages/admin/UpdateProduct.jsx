@@ -55,7 +55,7 @@ const UpdateProduct = () => {
 		setStock(selectedProduct?.product.Stock);
 		setOldImages(selectedProduct?.product.images);
 		dispatch(clearError())
-	}, [dispatch, id, isUpdated, selectedProduct]);
+	}, [dispatch, id, isUpdated, selectedProduct.product._id]);
 
 	const updateProductSubmitHandler = (e) => {
 		e.preventDefault();
